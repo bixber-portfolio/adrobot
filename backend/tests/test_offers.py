@@ -8,10 +8,10 @@ from app.main import app
 from app.services.offers import search_offers
 
 OFFERS = [
-    {"id": 18813, "name": "18813 Flexacil [JOINT-PE]", "state": "active"},
-    {"id": 11111, "name": "FitoMishki [Weight Loss]", "state": "active"},
-    {"id": 11112, "name": "Oxys [BEAUTY-CL]", "state": "active"},
-    {"id": 99, "name": "Old flexacil", "state": "deleted"},
+    {"id": 101, "name": "101 Alpha [Group A]", "state": "active"},
+    {"id": 11111, "name": "Beta [Group B]", "state": "active"},
+    {"id": 11112, "name": "Gamma [Group C]", "state": "active"},
+    {"id": 99, "name": "Old alpha", "state": "deleted"},
 ]
 
 
@@ -20,7 +20,7 @@ def ids(found):
 
 
 def test_empty_query_returns_all_active():
-    assert ids(search_offers(OFFERS, "")) == [18813, 11111, 11112]
+    assert ids(search_offers(OFFERS, "")) == [101, 11111, 11112]
 
 
 def test_search_by_id_part():
@@ -28,11 +28,11 @@ def test_search_by_id_part():
 
 
 def test_search_by_name_ignores_case_and_spaces():
-    assert ids(search_offers(OFFERS, "  FLEXACIL ")) == [18813]
+    assert ids(search_offers(OFFERS, "  ALPHA ")) == [101]
 
 
 def test_deleted_offers_are_hidden():
-    assert 99 not in ids(search_offers(OFFERS, "flexacil"))
+    assert 99 not in ids(search_offers(OFFERS, "alpha"))
 
 
 def test_limit_and_no_limit():
@@ -41,7 +41,7 @@ def test_limit_and_no_limit():
 
 
 def test_only_id_and_name_are_returned():
-    assert set(search_offers(OFFERS, "oxys")[0]) == {"id", "name"}
+    assert set(search_offers(OFFERS, "gamma")[0]) == {"id", "name"}
 
 
 class FakeClient:
@@ -60,9 +60,9 @@ def call(fake, url):
 
 
 def test_api_search():
-    r = call(FakeClient(), "/api/offers?q=oxys")
+    r = call(FakeClient(), "/api/offers?q=gamma")
     assert r.status_code == HTTPStatus.OK
-    assert r.json() == [{"id": 11112, "name": "Oxys [BEAUTY-CL]"}]
+    assert r.json() == [{"id": 11112, "name": "Gamma [Group C]"}]
 
 
 def test_api_limit_validation_and_keitaro_error():

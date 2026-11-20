@@ -10,7 +10,7 @@ from app.services.campaign_search import search_campaigns
 CAMPAIGNS = [
     {"id": 5, "name": "Germany Casino", "alias": "abc123", "state": "active"},
     {"id": 20, "name": "France Nutra", "alias": "zzz999", "state": "active"},
-    {"id": 31, "name": "bixber_test_DE", "alias": "qwe456",
+    {"id": 31, "name": "test_campaign_DE", "alias": "qwe456",
      "state": "deleted"},
     {"id": 40, "name": "Spain", "alias": "germ77", "state": "disabled"},
     {"id": 41, "name": None, "alias": None},
@@ -33,7 +33,7 @@ def test_search_by_name_alias_and_id_ignores_case_and_spaces():
 
 
 def test_archived_campaigns_are_never_found():
-    assert search_campaigns(CAMPAIGNS, "bixber") == []
+    assert search_campaigns(CAMPAIGNS, "test_campaign") == []
     assert search_campaigns(CAMPAIGNS, "31") == []
 
 

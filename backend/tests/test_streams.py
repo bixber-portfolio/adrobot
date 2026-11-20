@@ -17,7 +17,7 @@ from app.services.streams import (
     offers_from_stream,
 )
 
-CAMPAIGN_ID = 216076
+CAMPAIGN_ID = 1001
 
 REDIRECT = {
     "id": 10,
@@ -34,7 +34,7 @@ LANDINGS = {
     "schema": "landings",
     "offers": [
         {"offer_id": 222, "share": 60, "state": "active"},
-        {"offer_id": 18813, "share": 40, "state": "active"},
+        {"offer_id": 101, "share": 40, "state": "active"},
         {"offer_id": 5, "share": 25, "state": "disabled"},
     ],
 }
@@ -43,7 +43,7 @@ LANDINGS = {
 def test_offers_from_stream_marks_inactive_as_removed_with_zero_share():
     offers = offers_from_stream(LANDINGS)
     assert [(o.offer_id, o.share, o.removed) for o in offers] == [
-        (222, 60, False), (18813, 40, False), (5, 0, True)
+        (222, 60, False), (101, 40, False), (5, 0, True)
     ]
 
 
